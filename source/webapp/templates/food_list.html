@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="text-center"><h2>Меню</h2></div><br>
+    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'food_add' %}">Добавить блюдо</a></button>
+    {% for food in food_list %}
+        <div class="card-deck">
+            <div class="card mb-4">
+                <img class="card-img-top" src="{{ food.photo.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ food.name }}</h5>
+                    <p class="card-text">{{ food.description }}</p>
+                    <p class="card-text text-center">
+                        <a href="#"><i class="fas fa-edit mr-1"></i></a>
+                        <a href="{% url 'food_delete' food.pk %}"><i class="fas fa-trash-alt ml-1"></i></a>
+                    </p>
+                </div>
+            </div>
+{#            <div class="card">#}
+{#                <img class="card-img-top" src=".../100px200/" alt="Card image cap">#}
+{#                <div class="card-body"></div>#}
+{#            </div>#}
+{#            <div class="card">#}
+{#                <img class="card-img-top" src=".../100px200/" alt="Card image cap">#}
+{#                <div class="card-body"></div>#}
+{#            </div>#}
+        </div>
+    {% endfor %}
+{% endblock %}

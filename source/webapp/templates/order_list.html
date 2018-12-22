@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="text-center"><h2>Список заказов</h2></div><br>
+    <table class="table table-striped table-light">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Блюдо<span>_____________________________</span></th>
+            <th scope="col">Количество</th>
+            <th scope="col">ТФ. номер заказчика</th>
+            <th scope="col">Адрес доставки</th>
+            <th scope="col">Имя клиента</th>
+            <th scope="col">Оператор</th>
+            <th scope="col">Курьер</th>
+            <th scope="col">Статус заказа</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ord in order_list %}
+            <tr>
+                <th scope="row">{{ ord.pk }}</th>
+                <td>
+                    {% for c in ord.foods.all %}
+                        {{ c.food }} <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for c in ord.foods.all %}
+                        {{ c.amount}} <br>
+                    {% endfor %}
+                </td>
+                <td>{{ ord.contact_phone }}</td>
+                <td>{{ ord.delivery_address }}</td>
+                <td>{{ ord.contact_name}}</td>
+                <td>{{ ord.operator }}</td>
+                <td>{{ ord.courier }}</td>
+                <td>{{ ord.status }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+{#<th scope="row">{{ task.pk }}</th>#}
+{#<td>{% if task.status == True %}#}
+{#    <p>#}
+{#        <del><a href="{% url 'update' task.pk %}"> {{ task.name }}</a></del>#}
+{#    </p>{% else %}<a href="{% url 'update' task.pk %}"> {{ task.name }}</a>{% endif %}#}
+{#    <hr>#}
+{#</td>#}
+{#<td>{% if task.status == True %}Выполнена{% else %}Новая{% endif %}</td>#}
+{#<td>{% if task.status == False %}<a href="{% url 'do_the_task' task.pk %}">Выполнить</a>{% endif %}</td>#}
+{#<td><a href="{% url 'task_delete' task.pk %}">Удалить</a></td>#}
+
+
