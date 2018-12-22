@@ -1,5 +1,5 @@
 from webapp.models import Food, Order
-from django.views.generic import DetailView, ListView, CreateView, DeleteView
+from django.views.generic import DetailView, ListView, CreateView, DeleteView, UpdateView
 from webapp.forms import ProjectForm
 from django.urls import reverse_lazy
 
@@ -17,9 +17,6 @@ class FoodListView(ListView):
     model = Food
     template_name = 'food_list.html'
 
-class FoodDetailView(DetailView):
-    model = Food
-    template_name = 'food_detail.html'
 
 class FoodCreateView(CreateView):
     model = Food
@@ -30,5 +27,11 @@ class FoodCreateView(CreateView):
 class FoodDeleteView(DeleteView):
     model = Food
     template_name = 'food_delete.html'
+    form_class = ProjectForm
+    success_url = reverse_lazy('food_list')
+
+class FoodUpdateView(UpdateView):
+    model = Food
+    template_name = 'food_update.html'
     form_class = ProjectForm
     success_url = reverse_lazy('food_list')

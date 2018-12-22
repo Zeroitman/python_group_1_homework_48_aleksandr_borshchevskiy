@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Редактирование проекта</h1>
-    <form action="{% url 'article_update' form.instance.pk %}" method="post">
+    <form action="{% url 'food_update' form.instance.pk %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Сохранить</button>
