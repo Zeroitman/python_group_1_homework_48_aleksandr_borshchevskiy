@@ -5,11 +5,26 @@ from webapp.forms import ProjectForm, OrderForm, OrderFoodForm
 from django.urls import reverse_lazy
 
 
-def change_status(request, order_pk):
-    task = get_object_or_404(Order, pk=order_pk)
-    task.status = 'cancelled'
+def change_status(request, pk):
+    task = get_object_or_404(Order, pk=pk)
+    task.status = 'canceled'
     task.save()
     return redirect('order_list')
+
+
+def change_status_courier_1(request, pk):
+    task = get_object_or_404(Order, pk=pk)
+    task.status = 'on_way'
+    # task.courier =
+    task.save()
+    return redirect('courier_list')
+
+
+def change_status_courier_2(request, pk):
+    task = get_object_or_404(Order, pk=pk)
+    task.status = 'delivered'
+    task.save()
+    return redirect('courier_list')
 
 
 class ClientListView(ListView):
@@ -20,6 +35,7 @@ class ClientListView(ListView):
 class OrderListView(ListView):
     model = Order
     template_name = 'order_list.html'
+
 
 class CourierListView(ListView):
     model = Order

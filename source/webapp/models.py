@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='employee', verbose_name='Пользователь')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='employee', verbose_name='Пользователь')
     phone = models.CharField(max_length=50, verbose_name='Телефон')
 
     def __str__(self):

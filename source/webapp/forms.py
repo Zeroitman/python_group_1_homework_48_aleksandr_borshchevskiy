@@ -11,7 +11,7 @@ class ProjectForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['delivery_address', 'contact_phone', 'contact_name', 'operator']
+        fields = ['delivery_address', 'contact_phone', 'contact_name', 'operator', 'courier']
 
 
 class OrderFoodForm(forms.ModelForm):

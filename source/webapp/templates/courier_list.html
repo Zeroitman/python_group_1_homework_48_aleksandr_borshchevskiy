@@ -40,11 +40,11 @@
                 <td>{{ ord.courier }}</td>
                 <td>{{ ord.status }}</td>
                 <td>
-                    {% if ord.status == 'new' %}<a href="#">Взять заказ</a>
-                    {% elif ord.status == 'preparing' %}<a href="#">Взять заказ</a>
+                    {% if ord.status == 'new' %}<a href="{% url 'change_status_courier_1' ord.pk %}">Взять заказ</a>
+                    {% elif ord.status == 'preparing' %}<a href="{% url 'change_status_courier_1' ord.pk %}">Взять заказ</a>
                     {% elif ord.status == 'canceled' %}
                     {% elif ord.status == 'delivered' %}
-                    {% else %} <a href="#">Доставлен</a>{% endif %}
+                    {% else %} <a href="{% url 'change_status_courier_2' ord.pk %}">Доставлен</a>{% endif %}
                 </td>
             </tr>
         {% endfor %}

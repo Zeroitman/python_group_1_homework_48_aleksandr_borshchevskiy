@@ -2,10 +2,11 @@
 {% block title %}{% endblock %}
 {% block content %}
     <div class="text-center"><h2>Меню</h2></div><br>
-    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'food_add' %}">Добавить блюдо</a></button>
-    {% for food in food_list %}
-        <div class="card-deck">
-            <div class="card mb-4 border border-dark">
+    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'food_add' %}">Добавить
+        блюдо</a></button>
+    <div class="card-deck">
+        {% for food in food_list %}
+            <div class="card mb-4 border border-dark col-sm-4 p-0">
                 <img class="card-img-top" src="{{ food.photo.url }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ food.name }}</h5>
@@ -16,14 +17,6 @@
                     </p>
                 </div>
             </div>
-{#            <div class="card">#}
-{#                <img class="card-img-top" src=".../100px200/" alt="Card image cap">#}
-{#                <div class="card-body"></div>#}
-{#            </div>#}
-{#            <div class="card">#}
-{#                <img class="card-img-top" src=".../100px200/" alt="Card image cap">#}
-{#                <div class="card-body"></div>#}
-{#            </div>#}
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}

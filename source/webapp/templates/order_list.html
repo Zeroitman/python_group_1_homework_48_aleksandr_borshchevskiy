@@ -27,9 +27,8 @@
                         {{ c.food }} <br>
                     {% endfor %}
                     <div class="icons">
-                        <a href="{% url 'order_update' ord.pk %}"><i class="fas fa-edit"></i></a>
-                        {% if ord.status != 'canceled' %}<a href=""><i class="fas fa-ban"></i></a>{% endif %}
-{#                        {% if ord.status == 'canceled' %}<a href="{% url 'change_status' order.pk %}"><i class="fas fa-ban"></i></a>{% endif %}#}
+                        {% if ord.status != 'canceled' and ord.status != 'delivered'  %}<a href="{% url 'order_update' ord.pk %}"><i class="fas fa-edit"></i></a>{% endif %}
+                        {% if ord.status != 'canceled' and ord.status != 'delivered'  %}<a href="{% url 'change_status' ord.pk %}"><i class="fas fa-ban"></i></a>{% endif %}
                     </div>
                 </td>
                 <td>
