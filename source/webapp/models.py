@@ -21,11 +21,11 @@ class Food(models.Model):
 
 
 class Order(models.Model):
-    STATUS_NEW = 'new'
-    STATUS_PREPARING = 'preparing'
-    STATUS_ON_WAY = 'on_way'
-    STATUS_DELIVERED = 'delivered'
-    STATUS_CANCELED = 'canceled'
+    STATUS_NEW = 'Новый'
+    STATUS_PREPARING = 'Готовиться'
+    STATUS_ON_WAY = 'В пути'
+    STATUS_DELIVERED = 'Доставлен'
+    STATUS_CANCELED = 'Отменён'
 
     STATUS_CHOICES = (
         (STATUS_NEW, 'Новый'),

@@ -7,14 +7,14 @@ from django.urls import reverse_lazy
 
 def change_status(request, pk):
     task = get_object_or_404(Order, pk=pk)
-    task.status = 'canceled'
+    task.status = 'Отменён'
     task.save()
     return redirect('order_list')
 
 
 def change_status_courier_1(request, pk):
     task = get_object_or_404(Order, pk=pk)
-    task.status = 'on_way'
+    task.status = 'В пути'
     # task.courier =
     task.save()
     return redirect('courier_list')
@@ -22,7 +22,7 @@ def change_status_courier_1(request, pk):
 
 def change_status_courier_2(request, pk):
     task = get_object_or_404(Order, pk=pk)
-    task.status = 'delivered'
+    task.status = 'Доставлен'
     task.save()
     return redirect('courier_list')
 

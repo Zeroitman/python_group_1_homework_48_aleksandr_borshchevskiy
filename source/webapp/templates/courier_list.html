@@ -25,12 +25,12 @@
                 <th scope="row">{{ ord.pk }}</th>
                 <td>
                     {% for c in ord.foods.all %}
-                        {{ c.food }} <br>
+                        {{ c.food }} <hr>
                     {% endfor %}
                 </td>
                 <td>
                     {% for c in ord.foods.all %}
-                        {{ c.amount }} <br>
+                        {{ c.amount }} <hr>
                     {% endfor %}
                 </td>
                 <td>{{ ord.contact_phone }}</td>
@@ -40,10 +40,10 @@
                 <td>{{ ord.courier }}</td>
                 <td>{{ ord.status }}</td>
                 <td>
-                    {% if ord.status == 'new' %}<a href="{% url 'change_status_courier_1' ord.pk %}">Взять заказ</a>
-                    {% elif ord.status == 'preparing' %}<a href="{% url 'change_status_courier_1' ord.pk %}">Взять заказ</a>
-                    {% elif ord.status == 'canceled' %}
-                    {% elif ord.status == 'delivered' %}
+                    {% if ord.status == 'Новый' %}<a href="{% url 'change_status_courier_1' ord.pk %}">Взять заказ</a>
+                    {% elif ord.status == 'Готовиться' %}<a href="{% url 'change_status_courier_1' ord.pk %}">Взять заказ</a>
+                    {% elif ord.status == 'Отменён' %}
+                    {% elif ord.status == 'Доставлен' %}
                     {% else %} <a href="{% url 'change_status_courier_2' ord.pk %}">Доставлен</a>{% endif %}
                 </td>
             </tr>

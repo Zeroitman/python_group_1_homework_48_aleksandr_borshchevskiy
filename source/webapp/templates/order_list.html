@@ -24,16 +24,16 @@
                 <th scope="row">{{ ord.pk }}</th>
                 <td>
                     {% for c in ord.foods.all %}
-                        {{ c.food }} <br>
+                        {{ c.food }}<hr>
                     {% endfor %}
                     <div class="icons">
-                        {% if ord.status != 'canceled' and ord.status != 'delivered'  %}<a href="{% url 'order_update' ord.pk %}"><i class="fas fa-edit"></i></a>{% endif %}
-                        {% if ord.status != 'canceled' and ord.status != 'delivered'  %}<a href="{% url 'change_status' ord.pk %}"><i class="fas fa-ban"></i></a>{% endif %}
+                        {% if ord.status != 'Отменён' and ord.status != 'Доставлен'  %}<a href="{% url 'order_update' ord.pk %}"><i class="fas fa-edit"></i></a>{% endif %}
+                        {% if ord.status != 'Отменён' and ord.status != 'Доставлен'  %}<a href="{% url 'change_status' ord.pk %}"><i class="fas fa-ban"></i></a>{% endif %}
                     </div>
                 </td>
                 <td>
                     {% for c in ord.foods.all %}
-                        {{ c.amount }} <br>
+                        {{ c.amount }}<hr>
                     {% endfor %}
                 </td>
                 <td>{{ ord.contact_phone }}</td>
