@@ -15,7 +15,8 @@
             <th scope="col">Имя клиента</th>
             <th scope="col">Оператор</th>
             <th scope="col">Курьер</th>
-            <th scope="col">Статус заказа</th>
+            <th scope="col">Статус</th>
+            <th colspan="2">Выполнить действие</th>
         </tr>
         </thead>
         <tbody>
@@ -26,11 +27,6 @@
                     {% for c in ord.foods.all %}
                         {{ c.food }} <br>
                     {% endfor %}
-                    <div class="icons">
-                        <a href="{% url 'order_update' ord.pk %}"><i class="fas fa-edit"></i></a>
-                        {% if ord.status != 'canceled' %}<a href=""><i class="fas fa-ban"></i></a>{% endif %}
-{#                        {% if ord.status == 'canceled' %}<a href="{% url 'change_status' order.pk %}"><i class="fas fa-ban"></i></a>{% endif %}#}
-                    </div>
                 </td>
                 <td>
                     {% for c in ord.foods.all %}
@@ -43,13 +39,15 @@
                 <td>{{ ord.operator }}</td>
                 <td>{{ ord.courier }}</td>
                 <td>{{ ord.status }}</td>
+                <td>
+                    {% if ord.status == 'new' %}<a href="#">Взять заказ</a>
+                    {% elif ord.status == 'preparing' %}<a href="#">Взять заказ</a>
+                    {% elif ord.status == 'canceled' %}
+                    {% elif ord.status == 'delivered' %}
+                    {% else %} <a href="#">Доставлен</a>{% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 {% endblock %}
-
-
-
-
-

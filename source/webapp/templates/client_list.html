@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="text-center"><h2>Список пользователей</h2></div><br>
+    <table class="table table-striped table-light">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Имя пользователя</th>
+            <th scope="col">Номер телефона пользователя</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in employee_list %}
+            <tr>
+                <th scope="row">{{ user.pk }}</th>
+                <td>{{ user.user }}</td>
+                <td>{{ user.phone }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

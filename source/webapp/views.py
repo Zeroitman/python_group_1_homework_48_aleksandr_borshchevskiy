@@ -1,13 +1,29 @@
-from django.shortcuts import reverse
-from webapp.models import Food, Order, OrderFood
+from django.shortcuts import reverse, redirect, get_object_or_404
+from webapp.models import Food, Order, OrderFood, Employee
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from webapp.forms import ProjectForm, OrderForm, OrderFoodForm
 from django.urls import reverse_lazy
 
 
+def change_status(request, order_pk):
+    task = get_object_or_404(Order, pk=order_pk)
+    task.status = 'cancelled'
+    task.save()
+    return redirect('order_list')
+
+
+class ClientListView(ListView):
+    model = Employee
+    template_name = 'client_list.html'
+
+
 class OrderListView(ListView):
     model = Order
     template_name = 'order_list.html'
+
+class CourierListView(ListView):
+    model = Order
+    template_name = 'courier_list.html'
 
 
 class OrderCreateView(CreateView):
@@ -61,3 +77,12 @@ class OrderfoodCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('order_food_add', kwargs={'pk': self.kwargs.get('pk')})
+
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    template_name = 'order_update.html'
+    form_class = OrderForm
+    success_url = reverse_lazy('order_list')
+
+
