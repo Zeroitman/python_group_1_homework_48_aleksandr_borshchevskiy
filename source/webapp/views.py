@@ -1,6 +1,6 @@
 from django.shortcuts import reverse
 from webapp.models import Food, Order, OrderFood
-from django.views.generic import DetailView, ListView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from webapp.forms import ProjectForm, OrderForm, OrderFoodForm
 from django.urls import reverse_lazy
 
@@ -17,11 +17,6 @@ class OrderCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('order_food_add', kwargs={'pk': self.object.pk})
-
-
-class OrderDetailView(DetailView):
-    model = Order
-    template_name = 'order_detail.html'
 
 
 class FoodListView(ListView):
@@ -61,8 +56,8 @@ class OrderfoodCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.order = Order.objects.get(pk = self.kwargs.get('pk'))
+        form.instance.order = Order.objects.get(pk=self.kwargs.get('pk'))
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('order_detail', kwargs={'pk': self.kwargs.get('pk')})
+        return reverse('order_food_add', kwargs={'pk': self.kwargs.get('pk')})
