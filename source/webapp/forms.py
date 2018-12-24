@@ -1,8 +1,20 @@
 from django import forms
-from webapp.models import Food
+from webapp.models import Food, Order, OrderFood
 
 
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Food
-        fields = ['name', 'description', 'photo', 'price']
+        exclude = []
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['delivery_address', 'contact_phone', 'contact_name', 'operator']
+
+
+class OrderFoodForm(forms.ModelForm):
+    class Meta:
+        model = OrderFood
+        exclude = ['order']

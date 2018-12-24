@@ -1,7 +1,12 @@
 .table  span{
     color: white;
 }
+
 .card-text  a{
     font-size: 30px;
+    color: #000;
+}
+
+.icons a{
     color: #000;
 }
