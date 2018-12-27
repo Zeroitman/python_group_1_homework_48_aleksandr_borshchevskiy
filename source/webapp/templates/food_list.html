@@ -11,10 +11,10 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ food.name }}</h5>
                     <p class="card-text">{{ food.description }}</p>
-                    <p class="card-text text-center">
-                        <a href="{% url 'webapp:food_update' food.pk %}"><i class="fas fa-edit mr-1"></i></a>
-                        <a href="{% url 'webapp:food_delete' food.pk %}"><i class="fas fa-trash-alt ml-1"></i></a>
-                    </p>
+                </div>
+                <div class="card-footer card-text text-center">
+                    <a href="{% url 'webapp:food_update' food.pk %}"><i class="fas fa-edit mr-1"></i></a>
+                    <a href="{% url 'webapp:food_delete' food.pk %}"><i class="fas fa-trash-alt ml-1"></i></a>
                 </div>
             </div>
         {% endfor %}

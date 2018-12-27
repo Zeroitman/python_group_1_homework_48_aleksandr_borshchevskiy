@@ -8,12 +8,8 @@
                     <tr>
                         <th scope="row">{{ order_food.food.name }}</th>
                         <td>{{ order_food.amount }}</td>
-                        <td>
-                            {% if order.status == 'Новый' %}
-                                <a class="" href="{% url 'webapp:order_food_delete' order_food.pk %}">
-                                    <button type="submit" class="btn btn-primary">Удалить</button>
-                                </a>
-                            {% endif %}
+                        <td><a class="" href="{% url 'webapp:order_food_delete' order_food.pk %}">
+                                    <button type="submit" class="btn btn-primary">Удалить</button></a>
                         </td>
                     </tr>
                 {% endfor %}
