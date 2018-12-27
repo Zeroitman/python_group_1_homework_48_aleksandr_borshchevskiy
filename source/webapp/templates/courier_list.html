@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{% endblock %}
 {% block content %}
-    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'order_add' %}">Добавить
+    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'webapp:order_add' %}">Добавить
         заказ</a></button>
     <div class="text-center"><h2>Список заказов</h2></div><br>
     <table class="table table-striped table-light">
@@ -40,11 +40,11 @@
                 <td>{{ ord.courier }}</td>
                 <td>{{ ord.status }}</td>
                 <td>
-                    {% if ord.status == 'Новый' %}<a href="{% url 'change_status_courier_1' ord.pk %}">Взять заказ</a>
-                    {% elif ord.status == 'Готовиться' %}<a href="{% url 'change_status_courier_1' ord.pk %}">Взять заказ</a>
+                    {% if ord.status == 'Новый' %}<a href="{% url 'webapp:change_status_courier_1' ord.pk %}">Взять заказ</a>
+                    {% elif ord.status == 'Готовиться' %}<a href="{% url 'webapp:change_status_courier_1' ord.pk %}">Взять заказ</a>
                     {% elif ord.status == 'Отменён' %}
                     {% elif ord.status == 'Доставлен' %}
-                    {% else %} <a href="{% url 'change_status_courier_2' ord.pk %}">Доставлен</a>{% endif %}
+                    {% else %} <a href="{% url 'webapp:change_status_courier_2' ord.pk %}">Доставлен</a>{% endif %}
                 </td>
             </tr>
         {% endfor %}

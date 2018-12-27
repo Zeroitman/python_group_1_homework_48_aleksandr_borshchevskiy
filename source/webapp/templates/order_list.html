@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{% endblock %}
 {% block content %}
-    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'order_add' %}">Добавить
+    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'webapp:order_add' %}">Добавить
         заказ</a></button>
     <div class="text-center"><h2>Список заказов</h2></div><br>
     <table class="table table-striped table-light">
@@ -27,8 +27,8 @@
                         {{ c.food }}<hr>
                     {% endfor %}
                     <div class="icons">
-                        {% if ord.status != 'Отменён' and ord.status != 'Доставлен'  %}<a href="{% url 'order_update' ord.pk %}"><i class="fas fa-edit"></i></a>{% endif %}
-                        {% if ord.status != 'Отменён' and ord.status != 'Доставлен'  %}<a href="{% url 'change_status' ord.pk %}"><i class="fas fa-ban"></i></a>{% endif %}
+                        {% if ord.status != 'Отменён' and ord.status != 'Доставлен'  %}<a href="{% url 'webapp:order_update' ord.pk %}"><i class="fas fa-edit"></i></a>{% endif %}
+                        {% if ord.status != 'Отменён' and ord.status != 'Доставлен'  %}<a href="{% url 'webapp:change_status' ord.pk %}"><i class="fas fa-ban"></i></a>{% endif %}
                     </div>
                 </td>
                 <td>

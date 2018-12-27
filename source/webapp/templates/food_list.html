@@ -2,7 +2,7 @@
 {% block title %}{% endblock %}
 {% block content %}
     <div class="text-center"><h2>Меню</h2></div><br>
-    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'food_add' %}">Добавить
+    <button type="button" class="btn btn-warning text-dark btn-lg btn-block mb-2"><a href="{% url 'webapp:food_add' %}">Добавить
         блюдо</a></button>
     <div class="card-deck">
         {% for food in food_list %}
@@ -12,8 +12,8 @@
                     <h5 class="card-title text-center">{{ food.name }}</h5>
                     <p class="card-text">{{ food.description }}</p>
                     <p class="card-text text-center">
-                        <a href="{% url 'food_update' food.pk %}"><i class="fas fa-edit mr-1"></i></a>
-                        <a href="{% url 'food_delete' food.pk %}"><i class="fas fa-trash-alt ml-1"></i></a>
+                        <a href="{% url 'webapp:food_update' food.pk %}"><i class="fas fa-edit mr-1"></i></a>
+                        <a href="{% url 'webapp:food_delete' food.pk %}"><i class="fas fa-trash-alt ml-1"></i></a>
                     </p>
                 </div>
             </div>

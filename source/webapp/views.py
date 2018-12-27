@@ -9,7 +9,7 @@ def change_status(request, pk):
     task = get_object_or_404(Order, pk=pk)
     task.status = 'Отменён'
     task.save()
-    return redirect('order_list')
+    return redirect('webapp:order_list')
 
 
 def change_status_courier_1(request, pk):
@@ -17,14 +17,14 @@ def change_status_courier_1(request, pk):
     task.status = 'В пути'
     # task.courier =
     task.save()
-    return redirect('courier_list')
+    return redirect('webapp:courier_list')
 
 
 def change_status_courier_2(request, pk):
     task = get_object_or_404(Order, pk=pk)
     task.status = 'Доставлен'
     task.save()
-    return redirect('courier_list')
+    return redirect('webapp:courier_list')
 
 
 class ClientListView(ListView):
@@ -48,7 +48,7 @@ class OrderCreateView(CreateView):
     form_class = OrderForm
 
     def get_success_url(self):
-        return reverse('order_food_add', kwargs={'pk': self.object.pk})
+        return reverse('webapp:order_food_add', kwargs={'pk': self.object.pk})
 
 
 class FoodListView(ListView):
@@ -60,21 +60,21 @@ class FoodCreateView(CreateView):
     model = Food
     template_name = 'food_add.html'
     form_class = ProjectForm
-    success_url = reverse_lazy('order_list')
+    success_url = reverse_lazy('webapp:order_list')
 
 
 class FoodDeleteView(DeleteView):
     model = Food
     template_name = 'food_delete.html'
     form_class = ProjectForm
-    success_url = reverse_lazy('food_list')
+    success_url = reverse_lazy('webapp:food_list')
 
 
 class FoodUpdateView(UpdateView):
     model = Food
     template_name = 'food_update.html'
     form_class = ProjectForm
-    success_url = reverse_lazy('food_list')
+    success_url = reverse_lazy('webapp:food_list')
 
 
 class OrderfoodCreateView(CreateView):
@@ -92,13 +92,14 @@ class OrderfoodCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('order_food_add', kwargs={'pk': self.kwargs.get('pk')})
+        return reverse('webapp:order_food_add', kwargs={'pk': self.kwargs.get('pk')})
 
 
 class OrderUpdateView(UpdateView):
     model = Order
     template_name = 'order_update.html'
     form_class = OrderForm
-    success_url = reverse_lazy('order_list')
+    success_url = reverse_lazy('webapp:order_list')
+
 
 
