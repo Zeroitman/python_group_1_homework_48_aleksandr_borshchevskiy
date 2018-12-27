@@ -113,7 +113,6 @@ def change_status(request, pk):
 def change_status_courier_1(request, pk):
     task = get_object_or_404(Order, pk=pk)
     task.status = 'В пути'
-    # task.courier =
     task.save()
     return redirect('webapp:courier_list')
 
@@ -121,5 +120,12 @@ def change_status_courier_1(request, pk):
 def change_status_courier_2(request, pk):
     task = get_object_or_404(Order, pk=pk)
     task.status = 'Доставлен'
+    task.save()
+    return redirect('webapp:courier_list')
+
+
+def change_status_courier_3(request, pk):
+    task = get_object_or_404(Order, pk=pk)
+    task.status = 'Готовиться'
     task.save()
     return redirect('webapp:courier_list')

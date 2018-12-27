@@ -38,7 +38,7 @@
                 <td>{{ ord.operator }}</td>
                 <td>{{ ord.status }}</td>
                 <td>
-                    {% if ord.status == 'Новый' %}
+                    {% if ord.status == 'Новый' %}<a href="{% url 'webapp:change_status_courier_3' ord.pk %}">Приготовить</a>
                     {% elif ord.status == 'Готовиться' %}<a href="{% url 'webapp:change_status_courier_1' ord.pk %}">Взять заказ</a>
                     {% elif ord.status == 'Отменён' %}
                     {% elif ord.status == 'Доставлен' %}
