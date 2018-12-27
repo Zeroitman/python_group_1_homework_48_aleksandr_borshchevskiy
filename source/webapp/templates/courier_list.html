@@ -14,7 +14,6 @@
             <th scope="col">Адрес доставки</th>
             <th scope="col">Имя клиента</th>
             <th scope="col">Оператор</th>
-            <th scope="col">Курьер</th>
             <th scope="col">Статус</th>
             <th colspan="2">Выполнить действие</th>
         </tr>
@@ -37,14 +36,13 @@
                 <td>{{ ord.delivery_address }}</td>
                 <td>{{ ord.contact_name }}</td>
                 <td>{{ ord.operator }}</td>
-                <td>{{ ord.courier }}</td>
                 <td>{{ ord.status }}</td>
                 <td>
-                    {% if ord.status == 'Новый' %}<a href="{% url 'webapp:change_status_courier_1' ord.pk %}">Взять заказ</a>
+                    {% if ord.status == 'Новый' %}
                     {% elif ord.status == 'Готовиться' %}<a href="{% url 'webapp:change_status_courier_1' ord.pk %}">Взять заказ</a>
                     {% elif ord.status == 'Отменён' %}
                     {% elif ord.status == 'Доставлен' %}
-                    {% else %} <a href="{% url 'webapp:change_status_courier_2' ord.pk %}">Доставлен</a>{% endif %}
+                    {% else %} <a href="{% url 'webapp:change_status_courier_2' ord.pk %}">Доставить</a>{% endif %}
                 </td>
             </tr>
         {% endfor %}

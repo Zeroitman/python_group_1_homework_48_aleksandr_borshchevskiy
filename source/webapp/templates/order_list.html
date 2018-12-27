@@ -14,7 +14,6 @@
             <th scope="col">Адрес доставки</th>
             <th scope="col">Имя клиента</th>
             <th scope="col">Оператор</th>
-            <th scope="col">Курьер</th>
             <th scope="col">Статус заказа</th>
         </tr>
         </thead>
@@ -40,7 +39,6 @@
                 <td>{{ ord.delivery_address }}</td>
                 <td>{{ ord.contact_name }}</td>
                 <td>{{ ord.operator }}</td>
-                <td>{{ ord.courier }}</td>
                 <td>{{ ord.status }}</td>
             </tr>
         {% endfor %}

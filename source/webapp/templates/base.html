@@ -17,24 +17,31 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-success mb-3">
-        <a class="navbar-brand" href="{% url 'webapp:order_list' %}">На главную</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+                <li class="nav-item navbar-text">Привет, {{ user.username }}!</li>
+                <li class="nav-item"><a href="{% url 'webauth:logout' %}" class="nav-link">Выход</a></li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'webapp:food_list' %}">Меню <span class="sr-only">(current)</span></a>
+                    <a class="nav-link ml-5" href="{% url 'webapp:order_list' %}">На главную<span
+                            class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{% url 'webapp:client_list' %}">Список пользователей <span class="sr-only">(current)</span></a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'webapp:food_list' %}">Меню <span
+                            class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{% url 'webapp:courier_list' %}">Для курьеров <span class="sr-only">(current)</span></a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'webapp:courier_list' %}">Для курьеров <span
+                            class="sr-only">(current)</span></a>
                 </li>
-            </ul>
-        </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% block menu %}{% endblock %}
+            {% else %}
+                <li class="nav-item"><a href="{% url 'webauth:login' %}" class="nav-link">Вход</a></li>
+            {% endif %}
+        </ul>
     </nav>
     {% block content %}{% endblock %}
     <div class="class mt-4"></div>
@@ -52,3 +59,5 @@
 {% endblock %}
 </body>
 </html>
+
+
