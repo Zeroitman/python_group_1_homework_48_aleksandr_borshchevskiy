@@ -1,3 +1,14 @@
+{#{% extends 'base.html' %}#}
+{#{% block content %}#}
+{#    <div class="text-center"><h2>Страница добавление заказа</h2></div><br>#}
+{#    <form action="{% url 'webapp:order_add' %}" method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit" class="btn btn-">Сохранить</button>#}
+{#    </form>#}
+{#{% endblock %}#}
+
+
 {% extends 'base.html' %}
 {% block content %}
     <div class="text-center"><h2>Страница добавление заказа</h2></div><br>

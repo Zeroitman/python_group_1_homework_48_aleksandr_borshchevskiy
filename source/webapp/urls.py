@@ -2,7 +2,8 @@ from django.urls import path
 from webapp.views import OrderListView, OrderCreateView, OrderfoodCreateView, OrderUpdateView,\
                             FoodCreateView, FoodDeleteView, FoodUpdateView, FoodListView, \
                             OrderfoodDeleteView, CourierListView, change_status, change_status_courier_1,\
-                            change_status_courier_2, change_status_courier_3, DetailListView
+                            change_status_courier_2, change_status_courier_3, DetailListView, \
+                            OrderFoodAjaxCreateView
 app_name = 'webapp'
 
 urlpatterns = [
@@ -21,5 +22,7 @@ urlpatterns = [
     path('order/<int:pk>/change_status_courier_2', change_status_courier_2, name='change_status_courier_2'),
     path('order/<int:pk>/change_status_courier_3', change_status_courier_3, name='change_status_courier_3'),
     path('order_food/<int:pk>/update', DetailListView.as_view(), name='order_detail'),
+    # ----------------------------------------------------------------------------------------------------------------
+    path('order/<int:pk>/food/create', OrderFoodAjaxCreateView.as_view(), name='order_food_create'),
 ]
 

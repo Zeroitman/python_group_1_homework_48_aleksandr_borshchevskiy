@@ -1,21 +1,18 @@
 from django.shortcuts import reverse, redirect, get_object_or_404
 from webapp.models import Food, Order, OrderFood
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, FormView
 from webapp.forms import ProjectForm, OrderForm, OrderFoodForm
 from django.urls import reverse_lazy
+from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = 'order_list.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('%s' % reverse('webauth:login'))
-        return super().dispatch(request, *args, **kwargs)
 
-
-class OrderCreateView(CreateView):
+class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
     template_name = 'order_add.html'
     form_class = OrderForm
@@ -24,60 +21,51 @@ class OrderCreateView(CreateView):
         return reverse('webapp:order_food_add', kwargs={'pk': self.object.pk})
 
 
-class OrderUpdateView(UpdateView):
+class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model = Order
     template_name = 'order_update.html'
     form_class = OrderForm
     success_url = reverse_lazy('webapp:order_list')
 
 
-class CourierListView(ListView):
+class CourierListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = 'courier_list.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('%s' % reverse('webauth:login'))
-        return super().dispatch(request, *args, **kwargs)
 
 
 class FoodListView(ListView):
     model = Food
     template_name = 'food_list.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('%s' % reverse('webauth:login'))
-        return super().dispatch(request, *args, **kwargs)
 
-
-class FoodCreateView(CreateView):
+class FoodCreateView(LoginRequiredMixin, CreateView):
     model = Food
     template_name = 'food_add.html'
     form_class = ProjectForm
     success_url = reverse_lazy('webapp:food_list')
 
 
-class FoodDeleteView(DeleteView):
+class FoodDeleteView(LoginRequiredMixin, DeleteView):
     model = Food
     template_name = 'food_delete.html'
     form_class = ProjectForm
     success_url = reverse_lazy('webapp:food_list')
 
 
-class FoodUpdateView(UpdateView):
+class FoodUpdateView(LoginRequiredMixin, UpdateView):
     model = Food
     template_name = 'food_update.html'
     form_class = ProjectForm
     success_url = reverse_lazy('webapp:food_list')
 
 
-class DetailListView(DetailView):
+class DetailListView(LoginRequiredMixin, DetailView, FormView):
     model = Order
     template_name = 'order_detail.html'
+    form_class = OrderFoodForm
 
 
-class OrderfoodCreateView(CreateView):
+class OrderfoodCreateView(LoginRequiredMixin, CreateView):
     model = OrderFood
     template_name = 'order_food_add.html'
     form_class = OrderFoodForm
@@ -95,7 +83,7 @@ class OrderfoodCreateView(CreateView):
         return reverse('webapp:order_food_add', kwargs={'pk': self.kwargs.get('pk')})
 
 
-class OrderfoodDeleteView(DeleteView):
+class OrderfoodDeleteView(LoginRequiredMixin, DeleteView):
     model = OrderFood
     template_name = 'order_food_delete.html'
 
@@ -129,3 +117,26 @@ def change_status_courier_3(request, pk):
     task.status = 'Готовиться'
     task.save()
     return redirect('webapp:courier_list')
+
+# ------------------------------------------------------------------------------------------------------
+
+
+class OrderFoodAjaxCreateView(LoginRequiredMixin, CreateView):
+    model = OrderFood
+    form_class = OrderFoodForm
+
+    def form_valid(self, form):
+        order = get_object_or_404(Order, pk=self.kwargs.get('pk'))
+        form.instance.order = order
+        order_food = form.save()
+        return JsonResponse({
+            'food_name': order_food.food.name,
+            'amount': order_food.amount,
+            'order_pk': order_food.order.pk,
+            'pk': order_food.pk
+        })
+
+    def form_invalid(self, form):
+        return JsonResponse({
+            'errors': form.errors
+        }, status='422')
