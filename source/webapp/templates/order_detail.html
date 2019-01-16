@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Заказ{% endblock %}
 {% block content %}
+
     {#        <div class="card mt-2 bg-secondary">#}
     {#            <div class="card-body">#}
     {#                <table class="table">#}
@@ -25,25 +26,33 @@
 
     <div class="card mt-2 bg-secondary">
         <div class="card-body">
-            <table class="table">
+            <a href="#">
+                <button type="submit" class="btn btn-primary mb-2" data-toggle="modal"
+                        data-target="#food_edit_modal">Добавить блюдо
+                </button>
+            </a><br/>
+            <a href="{% url 'webapp:order_list' %}">
+                <button type="submit" class="btn btn-primary mb-2">Завершить</button>
+            </a>
+            <table class="table" id="order_food_list">
                 {% for order_food in order.foods.all %}
-                    <tr id="order_food_list">
-                        <td>{{ order_food.food.name }}</td>
-                        <td>{{ order_food.amount }}</td>
-                        <td><a href="{% url 'webapp:order_food_delete' order_food.pk %}">
+                    <tr>
+                        <td class="order_food_name">{{ order_food.food.name }}</td>
+                        <td class="order_food_amount">{{ order_food.amount }}</td>
+                        <td><a class="order_food_btn" href="{% url 'webapp:order_food_delete' order_food.pk %}">
                             <button type="submit" class="btn btn-primary">Удалить</button>
                         </a>
                         </td>
                     </tr>
                 {% endfor %}
-                <a href="#">
-                    <button type="submit" class="btn btn-primary mb-2" data-toggle="modal"
-                            data-target="#food_edit_modal">Добавить блюдо
-                    </button>
-                </a><br/>
-                <a href="{% url 'webapp:order_list' %}">
-                    <button type="submit" class="btn btn-primary mb-2">Завершить</button>
-                </a>
+                <tr id="order_food_template">
+                    <td class="order_food_name"></td>
+                    <td class="order_food_amount"></td>
+                    <td><a class="order_food_btn" href="">
+                        <button type="submit" class="btn btn-primary">Удалить</button>
+                    </a>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
@@ -75,21 +84,24 @@
 {% block scripts %}
     <script type="application/javascript">
         function addOrderFoodSuccess(response, status) {
+            const orderFoodDeleteURL = "{% url 'webapp:order_food_delete' 0 %}";
             console.log(response);
             console.log(status);
-            let newFoodLi = document.createElement('td');
-            $(newFoodLi).html(
-                `${response.food_name} ${response.amount} <a href="#">
-                            <button type="submit" class="btn btn-primary">Удалить</button>
-                        </a>`
-            );
-            $('#order_food_list').append(newFoodLi);
+            let newFoodTr = $('#order_food_template').clone();
+
+            newFoodTr.removeAttr('id');
+            newFoodTr.find('.order_food_name').text(response.food_name);
+            newFoodTr.find('.order_food_amount').text(response.amount);
+            newFoodTr.find('.order_food_btn').attr('href', orderFoodDeleteURL.replace('0', response.pk));
+            $('#order_food_list').append(newFoodTr);
             $('#food_edit_modal').modal('toggle');
         }
+
         function submitOrderFoodError(response, status) {
             console.log(response);
             console.log(status);
         }
+
         function addOrderFood() {
             let url = $('#food_form').attr('action');
             let data = {
@@ -105,6 +117,7 @@
                 error: submitOrderFoodError
             });
         }
+
         $('#food_submit').on('click', function (e) {
             $('#food_form').submit();
         });

@@ -10,3 +10,7 @@
 .icons a{
     color: #000;
 }
+
+#order_food_template {
+    display: none;
+}
