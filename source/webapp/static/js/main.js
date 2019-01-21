@@ -1,46 +1,3 @@
-// function addOrderFoodSuccess(response, status) {
-//     const orderFoodDeleteURL = "{% url 'webapp:order_food_delete' 0 %}";
-//     console.log(response);
-//     console.log(status);
-//     let newFoodTr = $('#order_food_template').clone();
-//     newFoodTr.removeAttr('id');
-//     newFoodTr.find('.order_food_name').text(response.food_name);
-//     newFoodTr.find('.order_food_amount').text(response.amount);
-//     newFoodTr.find('.order_food_btn').attr('href', orderFoodDeleteURL.replace('0', response.pk));
-//     $('#order_food_list').append(newFoodTr);
-//     $('#food_edit_modal').modal('toggle');
-// }
-//
-// function submitOrderFoodError(response, status) {
-//     console.log(response);
-//     console.log(status);
-// }
-//
-// function addOrderFood() {
-//     let url = $('#food_form').attr('action');
-//     let data = {
-//         food: $('#id_food').val(),
-//         amount: $('#id_amount').val(),
-//         csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
-//     };
-//     $.ajax({
-//         url: url,
-//         method: 'POST',
-//         data: data,
-//         success: addOrderFoodSuccess,
-//         error: submitOrderFoodError
-//     });
-// }
-//
-// $('#food_submit').on('click', function (e) {
-//     $('#food_form').submit();
-// });
-// $('#food_form').on('submit', function (e) {
-//     e.preventDefault();
-//     addOrderFood();
-// });
-
-//------------------------------------------------------------------
 
 function onCreateSuccess(response, status) {
     console.log(response);
@@ -60,19 +17,22 @@ function onCreateSuccess(response, status) {
         .text('Изменить')
         .click(onOrderFoodUpdate);
     let deleteLink = $('<a></a>')
-        .attr('href', '#')
-        .text('Удалить');
+        .attr('href', response.delete_url)
+        .data('pk', response.pk)
+        .text('Удалить блюдо')
+        .click(onOrderFoodDelete)
+        .addClass('delete_link');
+
 
     newFoodLi
         .attr('id', 'order_food_' + response.pk)
         .append(foodNameSpan)
         .append(document.createTextNode(': '))
         .append(foodAmountSpan)
-        .append(document.createTextNode(' шт. ('))
+        .append(document.createTextNode(' шт.'))
         .append(editLink)
         .append(document.createTextNode(' / '))
-        .append(deleteLink)
-        .append(document.createTextNode(')'));
+        .append(deleteLink);
 
     $('#order_food_list').append(newFoodLi);
 
@@ -147,12 +107,42 @@ function onOrderFoodUpdate(event) {
     $('#food_edit_modal').modal('show');
 }
 
-window.addEventListener('load', function () {
-    $('#food_submit').on('click', function (e) {
-        $('#food_form').submit();
-    });
-    $("#order_food_add_link").click(onOrderFoodCreate);
-    $('#order_food_list .edit_link').click(onOrderFoodUpdate);
-});
+function onOrderFoodDelete(event) {
+            event.preventDefault();
+            let url = $(this).attr('href');
+
+            $.ajax ({
+                url: url,
+                success: onDeleteFoodSuccess,
+                error: onFormSubmitError,
+                method: 'GET'
+            })
+
+        }
+
+
+        function onDeleteFoodSuccess(response, status) {
+            console.log(response);
+            console.log(status);
+
+            let pk = response['pk'];
+            let foodLi = $('#order_food_' + pk);
+            foodLi.remove();
+
+        }
+
+//
+        $(function () {
+            $("#food_submit").on('click', function () {
+                $('#food_form').submit();
+
+            });
+            $('#order_food_add_link').click(onOrderFoodCreate);
+
+            $('#order_food_list .edit_link').click(onOrderFoodUpdate);
+
+            $('#order_food_list .delete_link').click(onOrderFoodDelete);
+
+        });
 
 

@@ -134,7 +134,8 @@ class OrderFoodAjaxCreateView(CreateView):
             'food_pk': order_food.food.pk,
             'amount': order_food.amount,
             'pk': order_food.pk,
-            'edit_url': reverse('webapp:order_food_update', kwargs={'pk': order_food.pk})
+            'edit_url': reverse('webapp:order_food_update', kwargs={'pk': order_food.pk}),
+            'delete_url': reverse('webapp:order_food_delete_ajax', kwargs={'pk': order_food.pk})
         })
 
     def form_invalid(self, form):
@@ -164,6 +165,17 @@ class OrderFoodAjaxUpdateView(UpdateView):
 
 class OrderFoodAjaxDeleteView(LoginRequiredMixin, DeleteView):
     model = OrderFood
+
+    def delete(self, request, *args, **kwargs):
+        delete_food = get_object_or_404(OrderFood, pk=self.kwargs.get('pk'))
+        pk = delete_food.pk
+        delete_food.delete()
+        return JsonResponse({
+            'pk': pk
+        })
+
+    def get(self, *args, **kwargs):
+        return self.post(*args, **kwargs)
 
     def get_success_url(self):
         return reverse('webapp:order_detail', kwargs={'pk': get_object_or_404(OrderFood, pk=self.kwargs.get('pk')).order.pk})
