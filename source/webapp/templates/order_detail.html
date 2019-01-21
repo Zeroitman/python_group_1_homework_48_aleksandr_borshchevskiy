@@ -1,59 +1,102 @@
 {% extends 'base.html' %}
+{% load template_tag_examples %}
+{% load staticfiles %}
 {% block title %}Заказ{% endblock %}
 {% block content %}
 
-    {#        <div class="card mt-2 bg-secondary">#}
-    {#            <div class="card-body">#}
-    {#                <table class="table">#}
-    {#                    {% for order_food in order.foods.all %}#}
-    {#                        <tr>#}
-    {#                            <th scope="row">{{ order_food.food.name }}</th>#}
-    {#                            <td>{{ order_food.amount }}</td>#}
-    {#                            <td><a class="" href="{% url 'webapp:order_food_delete' order_food.pk %}">#}
-    {#                                        <button type="submit" class="btn btn-primary">Удалить</button></a>#}
-    {#                            </td>#}
-    {#                        </tr>#}
-    {#                    {% endfor %}#}
-    {#                    <a href="{% url 'webapp:order_food_add' order.pk %}">#}
-    {#                        <button type="submit" class="btn btn-primary mb-2">Добавить блюдо</button>#}
-    {#                    </a><br/>#}
-    {#                    <a href="{% url 'webapp:order_list' %}">#}
-    {#                        <button type="submit" class="btn btn-primary mb-2">Завершить</button>#}
-    {#                    </a>#}
-    {#                </table>#}
+
+    {#    <div class="card mt-2 bg-secondary">#}
+    {#        <div class="card-body">#}
+    {#            <a href="#">#}
+    {#                <button type="submit" class="btn btn-primary mb-2" data-toggle="modal"#}
+    {#                        data-target="#food_edit_modal">Добавить блюдо#}
+    {#                </button>#}
+    {#            </a><br/>#}
+    {#            <a href="{% url 'webapp:order_list' %}">#}
+    {#                <button type="submit" class="btn btn-primary mb-2">Завершить</button>#}
+    {#            </a>#}
+    {#            <table class="table" id="order_food_list">#}
+    {#                {% for order_food in order.foods.all %}#}
+    {#                    <tr>#}
+    {#                        <td class="order_food_name">{{ order_food.food.name }}</td>#}
+    {#                        <td class="order_food_amount">{{ order_food.amount }}</td>#}
+    {#                        <td>#}
+    {#                            <a class="order_food_btn" href="{% url 'webapp:order_food_delete' order_food.pk %}">#}
+    {#                                <button type="submit" class="btn btn-primary">Удалить</button>#}
+    {#                            </a>#}
+    {#                        </td>#}
+    {#                        <td>#}
+    {#                            <a class="order_food_btn-2" href="{% url 'webapp:order_food_update' order_food.pk %}">#}
+    {#                                <button type="submit" class="btn btn-primary" data-toggle="modal"#}
+    {#                                        data-target="#food_update_modal">Редактировать#}
+    {#                                </button>#}
+    {#                            </a>#}
+    {#                        </td>#}
+    {#                    </tr>#}
+    {#                {% endfor %}#}
+    {#                <tr id="order_food_template">#}
+    {#                    <td class="order_food_name"></td>#}
+    {#                    <td class="order_food_amount"></td>#}
+    {#                    <td>#}
+    {#                        <a class="order_food_btn" href="">#}
+    {#                            <button type="submit" class="btn btn-primary">Удалить</button>#}
+    {#                        </a>#}
+    {#                    </td>#}
+    {#                    <td>#}
+    {#                        <a class="order_food_btn-2" href="">#}
+    {#                            <button type="submit" class="btn btn-primary">Редактировать</button>#}
+    {#                        </a>#}
+    {#                    </td>#}
+    {#                </tr>#}
+    {#            </table>#}
+    {#        </div>#}
+    {#    </div>#}
+    {##}
+    {#    <div class="modal" tabindex="-1" role="dialog" id="food_edit_modal">#}
+    {#        <div class="modal-dialog" role="document">#}
+    {#            <div class="modal-content">#}
+    {#                <div class="modal-header">#}
+    {#                    <h5 class="modal-title">Добавить блюда</h5>#}
+    {#                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+    {#                        <span aria-hidden="true">&times;</span>#}
+    {#                    </button>#}
+    {#                </div>#}
+    {#                <div class="modal-body">#}
+    {#                    <form id="food_form" action="{% url 'webapp:order_food_create' order.pk %}" method="POST">#}
+    {#                        {% csrf_token %}#}
+    {#                        {{ form.as_p }}#}
+    {#                    </form>#}
+    {#                </div>#}
+    {#                <div class="modal-footer">#}
+    {#                    <button type="button" class="btn btn-primary" id="food_submit">Добавить</button>#}
+    {#                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>#}
+    {#                </div>#}
     {#            </div>#}
     {#        </div>#}
+    {#    </div>#}
+    {#{% endblock %}#}
 
-    <div class="card mt-2 bg-secondary">
+    <div class="card mt-2 bg-warning">
         <div class="card-body">
-            <a href="#">
-                <button type="submit" class="btn btn-primary mb-2" data-toggle="modal"
-                        data-target="#food_edit_modal">Добавить блюдо
-                </button>
-            </a><br/>
-            <a href="{% url 'webapp:order_list' %}">
-                <button type="submit" class="btn btn-primary mb-2">Завершить</button>
-            </a>
-            <table class="table" id="order_food_list">
-                {% for order_food in order.foods.all %}
-                    <tr>
-                        <td class="order_food_name">{{ order_food.food.name }}</td>
-                        <td class="order_food_amount">{{ order_food.amount }}</td>
-                        <td><a class="order_food_btn" href="{% url 'webapp:order_food_delete' order_food.pk %}">
-                            <button type="submit" class="btn btn-primary">Удалить</button>
-                        </a>
-                        </td>
-                    </tr>
+            <h1 class="text-center">Информация о заказе</h1>
+            <p>Имя заказчика: {{ order.contact_name|upper }}</p>
+            <p>Телефон: {{ order.contact_phone }} </p>
+            <p>Адрес доставки: {{ order.delivery_address|default_if_none:"Не указан" }}</p>
+
+            <h2 class="text-center" >Блюда в заказе </h2>
+            <p><a class="text-danger" href="{% url 'webapp:order_food_create' order.pk %}" id="order_food_add_link">Добавить блюда в заказ</a></p>
+            <ul id="order_food_list">
+                {% for order_food in order|get_foods %}
+                    <li id="order_food_{{ order_food.pk }}">
+                <span id="order_food_name_{{ order_food.pk }}"
+                      data-food_pk="{{ order_food.food.pk }}">{{ order_food.food.name }}</span>:
+                        <span id="order_food_amount_{{ order_food.pk }}">{{ order_food.amount }}</span> шт.
+                        <a class="edit_link" href="{% url 'webapp:order_food_update' order_food.pk %}"
+                            data-pk="{{ order_food.pk }}">Изменить</a> /
+                        <a href="{% url 'webapp:order_food_delete' order_food.pk %}">Удалить</a>
+                    </li>
                 {% endfor %}
-                <tr id="order_food_template">
-                    <td class="order_food_name"></td>
-                    <td class="order_food_amount"></td>
-                    <td><a class="order_food_btn" href="">
-                        <button type="submit" class="btn btn-primary">Удалить</button>
-                    </a>
-                    </td>
-                </tr>
-            </table>
+            </ul>
         </div>
     </div>
 
@@ -68,6 +111,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="food_form" action="{% url 'webapp:order_food_create' order.pk %}" method="POST">
+                        <div class="text-danger" id="food_form_errors"></div>
                         {% csrf_token %}
                         {{ form.as_p }}
                     </form>
@@ -82,48 +126,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="application/javascript">
-        function addOrderFoodSuccess(response, status) {
-            const orderFoodDeleteURL = "{% url 'webapp:order_food_delete' 0 %}";
-            console.log(response);
-            console.log(status);
-            let newFoodTr = $('#order_food_template').clone();
-
-            newFoodTr.removeAttr('id');
-            newFoodTr.find('.order_food_name').text(response.food_name);
-            newFoodTr.find('.order_food_amount').text(response.amount);
-            newFoodTr.find('.order_food_btn').attr('href', orderFoodDeleteURL.replace('0', response.pk));
-            $('#order_food_list').append(newFoodTr);
-            $('#food_edit_modal').modal('toggle');
-        }
-
-        function submitOrderFoodError(response, status) {
-            console.log(response);
-            console.log(status);
-        }
-
-        function addOrderFood() {
-            let url = $('#food_form').attr('action');
-            let data = {
-                food: $('#id_food').val(),
-                amount: $('#id_amount').val(),
-                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
-            };
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: data,
-                success: addOrderFoodSuccess,
-                error: submitOrderFoodError
-            });
-        }
-
-        $('#food_submit').on('click', function (e) {
-            $('#food_form').submit();
-        });
-        $('#food_form').on('submit', function (e) {
-            e.preventDefault();
-            addOrderFood();
-        });
-    </script>
+    <script type="application/javascript" src="{% static 'js/main.js' %}"></script>
 {% endblock %}

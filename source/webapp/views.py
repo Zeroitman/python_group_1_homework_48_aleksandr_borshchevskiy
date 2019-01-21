@@ -121,7 +121,7 @@ def change_status_courier_3(request, pk):
 # ------------------------------------------------------------------------------------------------------
 
 
-class OrderFoodAjaxCreateView(LoginRequiredMixin, CreateView):
+class OrderFoodAjaxCreateView(CreateView):
     model = OrderFood
     form_class = OrderFoodForm
 
@@ -131,8 +131,28 @@ class OrderFoodAjaxCreateView(LoginRequiredMixin, CreateView):
         order_food = form.save()
         return JsonResponse({
             'food_name': order_food.food.name,
+            'food_pk': order_food.food.pk,
             'amount': order_food.amount,
-            'order_pk': order_food.order.pk,
+            'pk': order_food.pk,
+            'edit_url': reverse('webapp:order_food_update', kwargs={'pk': order_food.pk})
+        })
+
+    def form_invalid(self, form):
+        return JsonResponse({
+            'errors': form.errors
+        }, status='422')
+
+
+class OrderFoodAjaxUpdateView(UpdateView):
+    model = OrderFood
+    form_class = OrderFoodForm
+
+    def form_valid(self, form):
+        order_food = form.save()
+        return JsonResponse({
+            'food_name': order_food.food.name,
+            'food_pk': order_food.food.pk,
+            'amount': order_food.amount,
             'pk': order_food.pk
         })
 
@@ -140,3 +160,10 @@ class OrderFoodAjaxCreateView(LoginRequiredMixin, CreateView):
         return JsonResponse({
             'errors': form.errors
         }, status='422')
+
+
+class OrderFoodAjaxDeleteView(LoginRequiredMixin, DeleteView):
+    model = OrderFood
+
+    def get_success_url(self):
+        return reverse('webapp:order_detail', kwargs={'pk': get_object_or_404(OrderFood, pk=self.kwargs.get('pk')).order.pk})
