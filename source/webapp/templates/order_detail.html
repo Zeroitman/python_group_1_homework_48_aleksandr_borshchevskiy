@@ -20,10 +20,10 @@
                 <span id="order_food_name_{{ order_food.pk }}"
                       data-food_pk="{{ order_food.food.pk }}">{{ order_food.food.name }}</span>:
                         <span id="order_food_amount_{{ order_food.pk }}">{{ order_food.amount }}</span> шт.
-                        <a class="edit_link" href="{% url 'webapp:order_food_update' order_food.pk %}
-                            " data-pk="{{ order_food.pk }}">Изменить</a> /
-                        <a class="delete_link" href="{% url 'webapp:order_food_delete_ajax' order_food.pk %}
-                            " data-pk="{{ order_food.food.pk }}"
+                        <a class="edit_link" href="{% url 'webapp:order_food_update' order_food.pk %}"
+                           data-pk="{{ order_food.pk }}">Изменить</a> /
+                        <a class="delete_link" href="{% url 'webapp:order_food_delete_ajax' order_food.pk %}"
+                           data-pk="{{ order_food.food.pk }}"
                         >Удалить блюдо</a>
                     </li>
                 {% endfor %}

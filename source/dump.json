@@ -41,28 +41,28 @@
 },
 {
   "model": "webapp.orderfood",
-  "pk": 160,
-  "fields": {
-    "order": 42,
-    "food": 9,
-    "amount": 12
-  }
-},
-{
-  "model": "webapp.orderfood",
-  "pk": 168,
-  "fields": {
-    "order": 43,
-    "food": 9,
-    "amount": 14
-  }
-},
-{
-  "model": "webapp.orderfood",
-  "pk": 171,
+  "pk": 174,
   "fields": {
     "order": 42,
     "food": 1,
+    "amount": 1
+  }
+},
+{
+  "model": "webapp.orderfood",
+  "pk": 175,
+  "fields": {
+    "order": 42,
+    "food": 9,
+    "amount": 1
+  }
+},
+{
+  "model": "webapp.orderfood",
+  "pk": 176,
+  "fields": {
+    "order": 43,
+    "food": 2,
     "amount": 1
   }
 },
